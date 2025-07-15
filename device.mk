@@ -1,3 +1,5 @@
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/recovery.fstab:etc/recovery.fstab
 
 LOCAL_PATH := device/xiaomi/laurel_sprout
 
