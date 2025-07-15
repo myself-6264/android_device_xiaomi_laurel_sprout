@@ -14,36 +14,39 @@
 # limitations under the License.
 #
 
-# Release name
+# Product release name
 PRODUCT_RELEASE_NAME := laurel_sprout
 
-# Inherit from those products. Most specific first.
+# Inherit base product configurations
 $(call inherit-product, build/target/product/embedded.mk)
 
-# Inherit from our custom product configuration
+# Inherit custom omni vendor configs
 $(call inherit-product, vendor/omni/config/common.mk)
 
-# Inherit from laurel_sprout device
+# Inherit device-specific configurations
 $(call inherit-product, device/xiaomi/laurel_sprout/device.mk)
 
-# Device identifier. This must come after all inclusions
+# Device properties (must come after all inheritances)
 PRODUCT_DEVICE := laurel_sprout
 PRODUCT_NAME := omni_laurel_sprout
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := Mi A3
 PRODUCT_MANUFACTURER := Xiaomi
 
+# Product build property overrides
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRODUCT_NAME="laurel_sprout" \
     TARGET_DEVICE="laurel_sprout"
 
+# Build fingerprint and build number (update to latest or keep stock)
 BUILD_FINGERPRINT := "Xiaomi/laurel_sprout/laurel_sprout:9/PKQ1.190416.001/V10.3.4.0.PFQMIXM:user/release-keys"
 BUILD_NUMBER := "V10.3.4.0.PFQMIXM"
 
+# Blacklist properties that shouldn't be passed to system
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
     ro.build.date.utc \
     ro.bootimage.build.date.utc
 
-# HACK: Set vendor patch level
+# Vendor security patch level override (hack)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.build.security_patch=2025-12-31
