@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-# This contains the module build definitions for the hardware-specific
+# This file contains the module build definitions for the hardware-specific
 # components for this device.
 #
 # As much as possible, those components should be built unconditionally,
@@ -27,8 +27,7 @@ LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_DEVICE),laurel_sprout)
 
+# Include all makefiles under this directory and subdirectories
 include $(call all-makefiles-under,$(LOCAL_PATH))
-
-include $(CLEAR_VARS)
 
 endif
