@@ -1,44 +1,54 @@
-# Define the local path to the device directory
-LOCAL_PATH := device/xiaomi/laurel_sprout
+#
+# Copyright (C) 2017 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
 
-# Copy the recovery fstab file to the output system
+LOCAL_PATH := $(call my-dir)
+
+# Copy the recovery.fstab from recovery/root/etc to the recovery's /etc
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/recovery.fstab:etc/recovery.fstab
+    $(LOCAL_PATH)/recovery/root/etc/recovery.fstab:etc/recovery.fstab
 
-# Define hardware platform
+# Hardware platform
 PRODUCT_PLATFORM := trinket
 
-# Enable A/B updater support
+# Enable A/B OTA support (if your device is A/B partitioned)
 AB_OTA_UPDATER := true
 
-# Packages to include in the product
+# Packages to include in the build (add or remove as needed)
 PRODUCT_PACKAGES += \
     update_engine \
     update_verifier \
     bootctrl.trinket
 
-# Debug packages
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
-# Enable update engine sideloading by including the static version of
-# boot_control HAL and its dependencies
+# Enable static boot control HAL and dependencies for sideloading
 PRODUCT_STATIC_BOOT_CONTROL_HAL := \
     bootctrl.trinket \
     libgptutils \
     libz \
     libcutils
 
-# Boot control HAL implementations
+# Boot control HAL services
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl \
     android.hardware.boot@1.0-service
 
-# Update engine sideload package
+# Additional packages
 PRODUCT_PACKAGES += \
     update_engine_sideload
 
-# Override properties for Treble and file-based encryption
+# Product properties overrides
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.treble.enabled=true \
     fbe.data.wrappedkey=true
+
+# Include all makefiles under this directory
+include $(call all-makefiles-under, $(LOCAL_PATH))
